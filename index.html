@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BST Notes by Fahim Ahmed</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <script src="script.js"></script>
+  <style src= "style.css"> </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Content here -->
+    <h1 class="display-6 pt-3 pb-3" style="text-align: center;">Binary Search Tree (BST)</h1>
+    
+
+    <!-- END OF ALERT -->
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>New Module!</strong> Check Mirror of BST 
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseOne">
+            Insertion in a BST – Recursive Solution
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+          aria-labelledby="panelsStayOpen-headingOne">
+          <div class="accordion-body">
+            <img src="insert_recursion.png" class="img-thumbnail">
+            <hr>
+            When looking for a place to insert a new key, traverse the tree from root-to-leaf, making comparisons to
+            keys stored in the tree’s nodes and deciding based on the comparison to continue searching in the left or
+            right subtrees. In other words, we examine the root and recursively insert the new node to the left subtree
+            if its key is less than that of the root or the right subtree if its key is greater than or equal to the
+            root. Here is an example of function <span class="badge bg-secondary">insert</span> in BST.
+            <hr>
+            <pre>
+def insert(root, key):
+
+  if root is None: return Node(key)
+
+  if key < root.data:
+  root.left = insert(root.left, key)
+  else:
+    root.right = insert(root.right, key)
+
+  return root
+              </pre>
+            Check out this leetcode problem --> <span class="badge bg-warning"> <a href = "https://leetcode.com/problems/insert-into-a-binary-search-tree/" class="text-decoration-none" style="color: white">701. Insert into a Binary Search Tree</a></span>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseTwo">
+            Balanced BST from a sorted List / Array
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+          aria-labelledby="panelsStayOpen-headingTwo">
+          <div class="accordion-body">
+
+            Lets say, you are given a sorted list/array of numbers. You have to construct a balanced BST from it. 
+
+            <!-- Button trigger modal -->
+            <span type="button" class="badge text-bg-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              What is a Balanced Binary Tree? 
+            </span>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Balanced Binary Tree</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    A <strong> balanced binary tree </strong>, also referred to as a height-balanced binary tree, is defined as a binary tree in which the height of the left and right subtree of any node differ by not more than 1.
+             <hr>
+   <pre>
+keys = [15, 10, 20, 8, 12, 16, 25]
+     
+        15
+      /    \
+    10      20
+   /  \    /  \
+  8   12  16  25  </pre>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END OF MODAL -->
+<br><br> 
+           <strong>Problem: </strong>Adding data to a regular Binary Search Tree (BST) can be slow in the worst case. If you add data in order (ascending or descending), the tree becomes unbalanced and searching for things takes longer.
+<br>
+            <strong>Solution:</strong> We want a <span class="badge text-bg-dark">Hight Balanced</span> BST, where the tree's depth grows slowly (like a log) even with lots of data. This makes searching much faster.
+<br><br>
+            <strong>How to achieve it: </strong> <br><br>
+
+
+            <ol>
+              <li>
+                <strong>Sort the data first:</strong>
+                <p>This ensures the tree structure is balanced from the start, meaning it won't be lopsided and searching will be faster.</p>
+              </li>
+              <li>
+                <strong>Pick the middle element:</strong>
+                <p>This element becomes the <code>root</code> of the tree. It's like the main trunk from which all other branches grow.</p>
+              </li>
+              <li>
+                <strong>Add smaller elements to the left:</strong>
+                <p>These elements are less than the root, so they go in the <code>left subtree</code>. Think of it as the left side of the family tree.</p>
+              </li>
+              <li>
+                <strong>Add larger elements to the right:</strong>
+                <p>These elements are more than the root, so they go in the <code>right subtree</code>. It's like the right side of the family tree.</p>
+              </li>
+              <li>
+                <strong>Repeat steps 2-4 for each subtree:</strong>
+                <p>Keep dividing the remaining data and building subtrees based on their values compared to the parent node. Imagine splitting the family tree branches further for each new generation.</p>
+              </li>
+            </ol>
+
+
+
+            We can easily modify the solution to get height-balanced BSTs if all keys are known in advance. The idea is to sort the given keys first. Then the root will be the middle element of the sorted array, and we <strong>recursively</strong> construct the left subtree of the root by keys less than the middle element and the right subtree of the root by keys more than the middle element.<hr> For example, lets say we have the array <code> keys = [15, 10, 20, 8, 12, 16, 25]</code>. After <span class="badge bg-secondary">sorting</span> the array, we get <code>[8, 10, 12, 15, 16, 20, 25]</code>. <br> Now we take the mid element <code>15</code> and split the array into two subarrays <code>[8, 10, 12]</code> and <code>[16, 20, 25]</code>. <br>
+
+            Now we again take the mid element of the left subtree and make that the left node of the current root.
+            <pre> 
+      15
+     /  \
+    10   (same as the left sub-tree)
+   /  \
+  8   12        </pre>
+
+            By repeating this process, we can construct the balanced BST. <br> 
+            Time Complexity <mark>O(nlog(n))</mark> 
+             <hr> <pre>
+def Balanced_BST(keys, low, high, root):
+  if low > high: return root
+
+  mid = (low + high) // 2
+  root = Node(keys[mid])
+
+  root.left = Balanced_BST(keys, low, mid-1, root.left)
+  root.right = Balanced_BST(keys, mid+1, high, root.right)
+            
+  return root</pre>
+              Check out this leetcode problem --> <span class="badge bg-success"> <a href = "https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/" class="text-decoration-none" style="color: white">108. Convert Sorted Array to Binary Search Tree</a></span>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseThree">
+            Traversals - Pre, In, Post Order
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+          aria-labelledby="panelsStayOpen-headingThree">
+          <div class="accordion-body">
+
+            <strong>Inorder Traversal</strong>
+
+            <ul>
+            <li>Visits nodes in the order: left subtree, root, right subtree.</li>
+            <li>In a BST, inorder traversal lists nodes in ascending order.</li>
+            </ul>
+
+            <p>Uses:</p>
+
+            <ul>
+            <li>Printing elements in ascending order.</li>
+            <li>Validating a BST.</li>
+            </ul>
+
+            <strong>Preorder Traversal</strong>
+
+            <ul>
+            <li>Visits nodes in the order: root, left subtree, right subtree.</li>
+            <li>Useful for copying a BST or creating a preorder index.</li>
+            </ul>
+
+            <p>Uses:</p>
+
+            <ul>
+            <li>Creating a copy of a BST.</li>
+            <li>Building a preorder index.</li>
+            </ul>
+
+            <strong>Postorder Traversal</strong>
+
+            <ul>
+            <li>Visits nodes in the order: left subtree, right subtree, root.</li>
+            <li>Often used for deleting a BST or calculating its height.</li>
+            </ul>
+
+            <p>Uses:</p>
+
+            <ul>
+            <li>Deleting a BST.</li>
+            <li>Calculating the height of a BST.</li>
+            </ul>
+
+
+            
+          </div>
+        </div>
+      </div>
+      <!--forth starts--> 
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+            Mirror A Binary Search Tree
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+          <div class="accordion-body">
+            Given a Binary Tree, the task is to convert the binary tree into its Mirror tree. Mirror of a Binary Tree T is another Binary Tree M(T) with left and right children of all non-leaf nodes interchanged. <br>
+            <pre>
+      15                        15
+    /    \                    /    \
+   10    18   (convert to)   18    10
+     \                            /
+      12                         12
+            </pre>
+            <hr>
+            Check out this leetcode problem --> <span class="badge bg-success"> <a href = "https://leetcode.com/problems/invert-binary-tree/" class="text-decoration-none" style="color: white">226. Invert Binary Tree</a></span>
+          </div>
+        </div>
+      </div>
+       <!--forth ends--> 
+    </div>
+    
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+
+  <script src="js/shCore.js"></script>
+  <script src="js/shBrushCpp.js"></script>
+  <script>
+    SyntaxHighlighter.all()
+  </script>
+<style>
+
+  @font-face {
+      font-family: 'Tiro Bangla';
+      src: url('/TiroBangla-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+  }
+
+  body {
+        font-family: Arial, sans-serif;
+    }
+  
+</style>
+  
+</body>
+
+</html>
