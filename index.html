@@ -379,17 +379,21 @@ def Balanced_BST(keys, low, high, root):
                   
                   <pre class="border" id="show_code" style= "display: none;">
                     
-      def mirror_BST(self, root): 
-        if root is None:  return None
+  def bstToGst(root):
+    current_sum  = 0
 
-        temp = root.left
-        root.left = root.right
-        root.right = temp
+    def dfs(root):
+      nonlocal current_sum
+      if root is None:  return 
 
-        self.invertTree(root.left)
-        self.invertTree(root.right)
+      dfs(root.right)
+      root.val += current_sum
+      current_sum = root.val
+      dfs(root.left)
 
-        return root
+    dfs(root)
+    return root
+                    
                   </pre>
                   <button type="button" class="btn btn-outline-success d-grid col-6 mx-auto" onclick="showHide(this)" id = "myButton">Show Code</button>
 
