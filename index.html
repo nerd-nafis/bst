@@ -261,23 +261,32 @@ def Balanced_BST(keys, low, high, root):
         <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
           <div class="accordion-body">
             Given a Binary Tree, the task is to convert the binary tree into its Mirror tree. Mirror of a Binary Tree T is another Binary Tree M(T) with left and right children of all non-leaf nodes interchanged. <br><br>
-            <img src="insert_recursion.png" class="img-thumbnail">
+            <pre class= "border">
+              
+       15                        15
+     /    \                    /    \
+    10    18   (convert to)   18    10
+     \                              /
+      12                          12
+                    </pre>
             
             <strong>Solution: </strong>
             <br>
             We know in a BST, the left child of a node is always less than the node itself. And the right child of a node is always. So, we just need to take a temp variable and <code>SWAP</code> the left subtree and right subtree of the node. And we can do that for each and every node recursively by calling the function itself. 
-            <pre>
-def mirror_BST(self, root): 
-  if root is None:  return None
+            <pre class= "border">  
+              
+  def mirror_BST(self, root): 
+    if root is None:  return None
 
-  temp = root.left
-  root.left = root.right
-  root.right = temp
+    temp = root.left
+    root.left = root.right
+    root.right = temp
 
-  self.invertTree(root.left)
-  self.invertTree(root.right)
+    self.invertTree(root.left)
+    self.invertTree(root.right)
 
-  return root
+    return root
+              
             </pre>
             
             <hr>
