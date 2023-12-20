@@ -18,3 +18,18 @@ if (alertTrigger) {
     alert('Nice, you triggered this alert message!', 'success')
   })
 }
+
+function showHide(button) {
+  let x = document.getElementById("show_code");
+  if (x.style.display === "none")
+  {
+    x.style.display = "block";
+    button.textContent = "Hide Code";
+  }
+  else{
+    x.style.display = "none";
+    button.textContent = "Show Code";
+  }
+}
+
+
