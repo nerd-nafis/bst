@@ -20,10 +20,35 @@
     <!-- END OF ALERT -->
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>New Module!</strong> Check Mirror of BST 
+      <strong>New Module!</strong> Check BST to Grater Sum Tree! 
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    
+    <!--grid-->
+
+    <div class="container mb-10  mt-10">
+      <div class="d-lg-flex">
+        <div class="col order-last">
+          <figure class="figure">
+            <img src="/bst.png" class="figure-img img-fluid rounded" alt="...">
+            <figcaption class="figure-caption text-end">*Image Collected from internet</figcaption>
+          </figure>
+        </div>
+        
+        <div class="col order-first">
+          <strong>Binary Search Tree (BST)</strong> is a node-based binary tree data structure which has the following properties:<br> 
+          <ul>
+            <li>The left subtree of a node contains only nodes with keys <mark>lesser</mark> than the node’s key.</li>
+            <li>The right subtree of a node contains only nodes with keys <mark>grater</mark> than the node’s key.</li>
+            <li>The left and right subtree each must also be a binary search tree.</li>
+          </ul>
+          
+          
+          
+        </div>
+      </div>
+    </div>
+
+    <!--grid end-->
     <div class="accordion" id="accordionPanelsStayOpenExample">
       <div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -235,20 +260,138 @@ def Balanced_BST(keys, low, high, root):
         </h2>
         <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
           <div class="accordion-body">
-            Given a Binary Tree, the task is to convert the binary tree into its Mirror tree. Mirror of a Binary Tree T is another Binary Tree M(T) with left and right children of all non-leaf nodes interchanged. <br>
+            Given a Binary Tree, the task is to convert the binary tree into its Mirror tree. Mirror of a Binary Tree T is another Binary Tree M(T) with left and right children of all non-leaf nodes interchanged. <br><br>
+            <img src="insert_recursion.png" class="img-thumbnail">
+            
+            <strong>Solution: </strong>
+            <br>
+            We know in a BST, the left child of a node is always less than the node itself. And the right child of a node is always. So, we just need to take a temp variable and <code>SWAP</code> the left subtree and right subtree of the node. And we can do that for each and every node recursively by calling the function itself. 
             <pre>
-      15                        15
-    /    \                    /    \
-   10    18   (convert to)   18    10
-     \                            /
-      12                         12
+def mirror_BST(self, root): 
+  if root is None:  return None
+
+  temp = root.left
+  root.left = root.right
+  root.right = temp
+
+  self.invertTree(root.left)
+  self.invertTree(root.right)
+
+  return root
             </pre>
+            
             <hr>
             Check out this leetcode problem --> <span class="badge bg-success"> <a href = "https://leetcode.com/problems/invert-binary-tree/" class="text-decoration-none" style="color: white">226. Invert Binary Tree</a></span>
           </div>
         </div>
       </div>
        <!--forth ends--> 
+
+      <!--fifth starts--> 
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                 BST to Grater Sum Tree 🔥
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+                <div class="accordion-body">
+                  Given the <span class="badge bg-dark">root</span> of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus the sum of all keys greater than the original key in BST. <br><br>
+                  <img src="tree.png" class="img-thumbnail">
+<br>  
+                  <strong>Solution: </strong>
+<br> 
+                  <span class="badge bg-danger">Important Observation</span> In BST, the left child of a node is always less than the node itself. And the right child of a node is always grater than the node itself. So, for a tree like this -
+                  <pre class="border">
+      A
+    /   \
+   B     C </pre>
+                  The Order is always <code>C > A > B</code>
+                  <br><br> 
+                   Let's just focus at this part of the tree. We are at the right most element of the tree. And we know that the right most element is the largest element in the tree.
+                  <pre class="border">
+
+      \                        
+       6                       
+     /   \                     
+    5     7                    
+           \                   
+            8 <-- reached here 
+                  </pre>
+
+                  So as we can see, we need to add the sum of all the elements greater than the current node to the current node. And we are at the right most element of the tree. So, the current node value remains the same. Now, we need to go to the root of this current node, and add the value of the current node with the root (2nd largest) . So, 7 becoming (7 + 8) = 15. 
+<pre class="border">
+
+      \                        
+       6                       
+     /   \                     
+    5     15 (7+8)  <-- here   
+           \                   
+            8       
+
+</pre>
+                  As 15 (previously 7) has no left node, we now go to it's root (which is the 3rd largest) and add up the value of the current node with the root, so 6 becomes 15+6 = 21. And so on.
+<pre class= "border">
+  
+      \                        
+       21 (6+15) <-- here      
+     /   \                     
+    5     15                   
+           \                   
+            8 
+         
+</pre>
+                  <span class="badge bg-danger">Important Observation</span> What we're doing here is traversing the tree in such order - <code>right -> root -> left</code>. This is exactly opposit of the Inorder Traversal. So, we can solve this problem in this way, 
+
+                  <ol>
+                    <li>
+                      <b>Initialize accumulator:</b> Create a variable <code>current_sum</code> and set it to <code>0</code>. This will accumulate the sum of visited nodes.
+                    </li>
+                    <li>
+                      <b>Define a recursive helper function:</b> Define a function named <code>dfs</code> that takes a <code>root</code> node as input.
+                      <ul>
+                        <li><b>Base case:</b> Check if the <code>root</code> is <code>None</code>. If so, simply return.</li>
+                        <li><b>Process right subtree:</b> Call <code>dfs</code> recursively on the <code>root.right</code> subtree. This ensures processing larger values first.</li>
+                        <li><b>Update node value:</b> Add the current <code>current_sum</code> to the <code>root.val</code>. This effectively adds the sum of all larger nodes to the current node.</li>
+                        <li><b>Update accumulator:</b> Update the <code>current_sum</code> by assigning the current <code>root.val</code> to it. This prepares the sum for the left subtree.</li>
+                        <li><b>Process left subtree:</b> Call <code>dfs</code> recursively on the <code>root.left</code> subtree.</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <b>Start from root:</b> Call the <code>dfs</code> function with the initial <code>root</code> of the binary search tree.
+                    </li>
+                    <li>
+                      <b>Return modified tree:</b> The function returns the modified <code>root</code> node where each node now stores the sum of all larger nodes in the original tree.
+                    </li>
+                  </ol>
+
+
+
+                  
+                  <pre class="border" id="show_code" style= "display: none;">
+                    
+      def mirror_BST(self, root): 
+        if root is None:  return None
+
+        temp = root.left
+        root.left = root.right
+        root.right = temp
+
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
+        return root
+                  </pre>
+                  <button type="button" class="btn btn-outline-success d-grid col-6 mx-auto" onclick="showHide(this)" id = "myButton">Show Code</button>
+
+                  <hr>
+                  Check out this leetcode problem --> <span class="badge bg-warning"> <a href = "https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/description/" class="text-decoration-none" style="color: white">1038. Binary Search Tree to Greater Sum Tree
+</a></span>
+                </div>
+              </div>
+            </div>
+             <!--fifth ends--> 
+      
     </div>
     
 
